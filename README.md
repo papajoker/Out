@@ -32,6 +32,7 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
 
 ####1.1) core
  copier le dossier core dans /app/vues/
+ > ce ne sont que des templates de bas niveau ou micro templates
 
 ####1.2) exemples
  vue /app/views/frontend/pages/home.blade.php
@@ -53,7 +54,7 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
 ###1) directe
 
 On n'utilise pas de helper juste un include
-        @include('core.li',array('params'=>array('content'=>'test','href'=>'#')))
+     @include('core.li',array('params'=>array('content'=>'test','href'=>'#')))
 
 
 ###2) Helper
@@ -79,4 +80,4 @@ html est la méthode la plus générale
         }}
 
 une méthode "txt" plus simple:
-        {{ $out->txt('b','je suis en gras') }}
+     {{ $out->txt('b','je suis en gras') }}
