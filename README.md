@@ -80,6 +80,9 @@ html est la méthode la plus générale
 			->with('style','color:#d00')	
         }}
 
-une méthode "txt" plus simple:
-
-        {{ $out->txt('b','je suis en gras') }}
+la méthode dynamique plus simple:
+> le nom de la méthode est celui du template
+        {{ $out->li('je suis une puce') }}
+        {{ $out->li('je suis une puce' , array('class'=>'o') )  }}        
+        {{ $out->ulOpen(  array('class'=>'o') ) }}
+        {{ $out->ulClose() }}        

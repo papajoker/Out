@@ -19,9 +19,11 @@
 <h2>Test du helper Out</h2>	
 	
 <?php
-//var_dump(Out);
+Out::isValid('a', array() );
+
 $out=$app['Out'];
 var_dump($out);
+//print_r(\Config::getItems());
 ?>
 	
 	<br>
@@ -40,7 +42,7 @@ var_dump($out);
 	<br>@include('core.li',array('params'=>array('content'=>'test','href'=>'#')))
 	<br><i>include('core.li',array('params'=>array('content'=>'test sans lien')))</i>
 	<br>@include('core.li',array('params'=>array('content'=>'test sans lien')))
-	
+
 	<br>test d'un strong:
 	{{ $out->txt('b','je suis en gras') }}
 	
@@ -55,6 +57,23 @@ var_dump($out);
 			->with('style','color:#d00')
 	
 	}}
+	
+	<br>tests dynamiques
+	{{	$out->li( 'appel a liTxt(string)' )	}}
+	{{	$out->li( array('content'=>'appel a li(array)') )	}}
+	
+	{{	$out->li( 'appel a liTxt(string)',array('style'=>'color:#0c0') )	}}
+	{{
+		$out->li( 'appel a liTxt(string)',array('class'=>'strong') )
+			->with('style','color:#990')
+	}}
+	{{	$out->li( array('content'=>'appel a li(array)','style'=>'color:#00c') )	}}
+	<hr>
+        {{ $out->li('je suis une puce') }}
+        {{ $out->li('je suis une puce' , array('class'=>'o') )  }}        
+        {{ $out->ulOpen(  array('class'=>'o') ) }}
+        {{ $out->ulClose() }} 	
+	
 	
 	
 	

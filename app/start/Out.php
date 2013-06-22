@@ -36,11 +36,22 @@ class OutServiceProvider extends ServiceProvider {
  
     public function register()
     {
-        $this->app->bind('Out', function()
+        //$this->app->bind('Out', function()
+	$this->app['Out'] = $this->app->share(function()
         {
-            return new Out( $this->app['view'] );
+            return new Out(  );
         });
     }
+    /**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return array('out');
+	}
+
 }
 
 
@@ -49,6 +60,7 @@ class Out
   private $template;		// nom du micro template blade
   private $elements=array(); 	// elements inclus dans ->add
   private $params=array();	// parametres ->with
+
   
   public function __construct()
   {
@@ -61,21 +73,21 @@ class Out
    *	methode générale pout tout tag html
    */
   public function html ($templateBlade, Array $params=array() )
-  {
+  { 
 	$this->template=$templateBlade;
 	
 	if (!array_key_exists('href',$this->params)) $this->params['href']=null;
 	if (!array_key_exists('content',$this->params)) $this->params['content']='';
 	//if (!isset($this->params['actif'])) $this->params['actif']=false;
 	if ($params) {
-	  $this->params=$this->convertClass($params);	//print_r($this->params);
+	  $this->params=self::convertClass($params);	//print_r($this->params);
 	}
 	return $this;
   }
   
   public function __toString()
   {
-    return (String)$this->out();
+    return (String)self::out();
   }
 
   
@@ -95,8 +107,40 @@ class Out
    */
   public function txt($templateBlade, $txt, Array $params=null){
       $params['content']=$txt;
-      return static::html($templateBlade,$params);
+      return $this->html($templateBlade,$params);
   }
+  
+	/**
+	 * Appel dynamique a un micro-template
+	 * 	Out::li( array() )
+	 * 	Out::liTxt('message', array() )
+	 *
+	 * @param  string  $method
+	 * @param  array   $parameters
+	 * @return String chaine html
+	 */
+	public function __call($method, $parameters=array() )
+	{
+
+	  if (count($parameters)>1){
+	      $content= array_shift($parameters);
+	      $parameters=array_shift($parameters);
+	      $parameters['content']=$content;
+	  }
+	  else{
+	    $parameters=array_shift($parameters);
+	    $parameters = (is_string($parameters)) ? array('content'=>$parameters) : $parameters;
+	  }
+
+	  $template=base_path().'/app/views/core/'.$method.'.blade.php';
+	  if (file_exists($template)){
+	      if (!is_array($parameters)) $parameters=array();
+	      return $this->html($method,$parameters);
+	  }
+	  else
+	    throw new Exception('Micro template inexistant '.$template);
+	    //throw new ExpectedMethodTarget('Micro template inexistant');
+	}  
 
   /**
    *	ajoute un sous element au tag
@@ -115,7 +159,6 @@ class Out
   public function with($key,$value){
 	$this->params[$key]=$value;
 	if ($key=='class') $this->params=$this->convertClass($this->params);
-	//echo ' with:'.$key.' ';
 	return $this;
   }
 
@@ -151,5 +194,5 @@ class Out
     }
     return $params;
   }
-
+  
 }
