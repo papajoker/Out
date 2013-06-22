@@ -42,8 +42,8 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
  
 #### 2.1) copier le fichier Out.php
 #### 2.2) dans global.php ajouter ces 2 lignes :
-    `require_once __dir__.'/Out.php';
-    App::register('OutServiceProvider');`
+   `require_once __dir__.'/Out.php';
+   App::register('OutServiceProvider');`
 >ce helper n'est pas encore un package
     
 
@@ -51,11 +51,10 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
 
 ##Utilisations
 
-###1) directe
+###1) directe :(
 
 On n'utilise pas de helper juste un include
-
-        @include('core.li',array('params'=>array('content'=>'test','href'=>'#')))
+ `@include('core.li',array('params'=>array('content'=>'test','href'=>'#')))`
 
 
 ###2) Helper
