@@ -21,7 +21,7 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
 
 -----
 
-##Installation namuelle
+##Installation manuelle
 
 >Note : pour l'instant ce n'est pas un package juste un test de fonctionnalité.
 
@@ -31,19 +31,19 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
 
 
 ####1.1) core
- copier le dossier core dans /app/vues/
+ copier le dossier core dans `/app/vues/`
  > ce ne sont que des templates de bas niveau ou micro templates
 
 ####1.2) exemples
  vue /app/views/frontend/pages/home.blade.php
     
 ###2) Helper
- dans app/start/
+ dans `app/start/`
  
 #### 2.1) copier le fichier Out.php
 #### 2.2) dans global.php ajouter ces 2 lignes :
-        require_once __dir__.'/Out.php';
-        App::register('OutServiceProvider');
+        `require_once __dir__.'/Out.php';
+        App::register('OutServiceProvider');`
 >ce helper n'est pas encore un package
     
 
