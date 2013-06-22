@@ -21,10 +21,17 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
 
 -----
 
-##Installation manuelle
+##Installation 
 
->Note : pour l'instant ce n'est pas un package juste un test de fonctionnalité.
+faire un composer update papajoker/out
 
+dans config/app.php
+
+ajouter dans  [providers]
+`'Papajoker\Out\OutServiceProvider',`
+
+ajouter dans  [aliases]
+`'Out'=> 'Papajoker\Out\Facades\Out',`
 
 
 ###1) Vues
@@ -34,18 +41,7 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
  copier le dossier core dans `/app/vues/`
  > ce ne sont que des templates de bas niveau ou micro templates
 
-####1.2) exemples
- vue /app/views/frontend/pages/home.blade.php
-    
-###2) Helper
- dans `app/start/`
- 
-#### 2.1) copier le fichier Out.php
-#### 2.2) dans global.php ajouter ces 2 lignes :
-   `require_once __dir__.'/Out.php';
-   App::register('OutServiceProvider');`
->ce helper n'est pas encore un package
-    
+   
 
 -----
 
@@ -53,25 +49,24 @@ Ce qui permet de plus réutiliser son travail et devrais permettre une plus gran
 
 ###1) directe :(
 
-On n'utilise pas de helper juste un include
+On n'utilise pas le helper juste un include
  `@include('core.li',array('params'=>array('content'=>'test','href'=>'#')))`
 
 
 ###2) Helper
 
-        $out=$app['Out'];
->ce helper n'est qu'un test
+
 
 html est la méthode la plus générale
 
-        {{	$out->html('li')
+        {{	Out::html('li')
 			->with('content','test avec with')
 			->with('style','color:#d00')
         }}
 
 
         {{
-		$out->html('ul')
+		Out::html('ul')
 			->add( array('content'=>'ligne1') )
 			->add( array('content'=>'ligne2','style'=>'color:#00d') )
 			->add( array('content'=>'ligne3') )
@@ -82,8 +77,8 @@ html est la méthode la plus générale
 la méthode dynamique plus simple:
 > le nom de la méthode est celui du template
 
-        {{ $out->li('je suis une puce') }}
-        {{ $out->li('je suis une puce')->with('class'=>'o')  }}         
-        {{ $out->li('je suis une puce' , array('class'=>'o') )  }}        
-        {{ $out->ulOpen(  array('class'=>'o') ) }}
-        {{ $out->ulClose() }}        
+        {{ Out::li('je suis une puce') }}
+        {{ Out::li('je suis une puce')->with('class'=>'o')  }}         
+        {{ Out::li('je suis une puce' , array('class'=>'o') )  }}        
+        {{ Out::ulOpen(  array('class'=>'o') ) }}
+        {{ Out::ulClose() }}        
